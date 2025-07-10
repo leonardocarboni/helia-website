@@ -41,10 +41,7 @@ const staggerContainer = {
 const StarRating = () => (
   <div className="flex items-center justify-center gap-1 mb-4">
     {[1, 2, 3, 4, 5].map((star) => (
-      <Star
-        key={star}
-        className="w-4 h-4 fill-yellow-400 text-yellow-400"
-      />
+      <Star key={star} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
     ))}
   </div>
 );
@@ -172,7 +169,7 @@ export default function HomePage() {
           </motion.div>
           {/* Early Access */}
           <motion.div className="mt-10" variants={fadeInUp}>
-            <Link href="/adoc" className="inline-block group">
+            <Link href="/contatti" className="inline-block group">
               <div className="relative px-5 py-2 bg-black/40 border border-white/20 rounded-lg hover:bg-black/60 hover:border-white/40 transition-all duration-300 backdrop-blur-sm shadow-md hover:shadow-purple-500/20 transform group-hover:-translate-y-0.5">
                 <p className="text-sm font-medium text-gray-200 text-center">
                   🚀 Helia è in Early Access - Richiedila per la tua azienda!
@@ -397,7 +394,7 @@ export default function HomePage() {
             ></div>
             <div className="relative z-10">
               <h4 className="font-bold mb-2 text-white">
-                Programmazione Appuntamenti Automatica ��
+                Programmazione Appuntamenti Automatica 📅
               </h4>
               <p className="text-gray-300">
                 Basta con i doppi appuntamenti e le confusioni! Helia accede al
@@ -915,9 +912,12 @@ export default function HomePage() {
             className="text-lg text-gray-300 mb-6 leading-relaxed"
             variants={fadeInUp}
           >
-            Helia è sviluppata da <strong className="text-[#2cc1de]">LAIF Group</strong>, un'azienda specializzata in soluzioni AI innovative per le imprese. 
-            Con anni di esperienza nel settore dell'intelligenza artificiale e dell'automazione dei processi aziendali, 
-            creiamo tecnologie che semplificano il lavoro e migliorano l'efficienza operativa.
+            Helia è sviluppata da{" "}
+            <strong className="text-[#2cc1de]">LAIF Group</strong>, un'azienda
+            specializzata in soluzioni AI innovative per le imprese. Con anni di
+            esperienza nel settore dell'intelligenza artificiale e
+            dell'automazione dei processi aziendali, creiamo tecnologie che
+            semplificano il lavoro e migliorano l'efficienza operativa.
           </motion.p>
           <motion.div variants={fadeInUp}>
             <a
