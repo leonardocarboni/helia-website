@@ -1,0 +1,76 @@
+services:
+  # ---------------------------------------------------------
+  # NGINX PROXY + LET'S ENCRYPT COMPANION
+  # ---------------------------------------------------------
+  nginx-proxy:
+    image: jwilder/nginx-proxy:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80" # Required for Let's Encrypt http-01 challenge
+      - "443:443" # HTTPS
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:rw # External volume to store certs
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - ./nginx/logs:/var/log/nginx
+    environment:
+      # Remove or keep DEBUG as you prefer
+      - DEBUG=false
+    networks:
+      - app-network
+    restart: always
+
+  # This container automatically obtains/renews certificates from Let's Encrypt
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs:rw # External volume to store certs
+      - vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    environment:
+      # The default email used for registration and important account notifications
+      - DEFAULT_EMAIL=leocarbo00@gmail.com
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    networks:
+      - app-network
+    restart: always
+
+  # -----------------------------
+  # YOUR WEB SERVICES
+  # -----------------------------
+  website:
+    build: ./website
+    container_name: website
+    environment:
+      # The domain(s) for this container
+      - VIRTUAL_HOST=Laif.it,www.Laif.it
+      # Let's Encrypt config (matching domain(s))
+      - LETSENCRYPT_HOST=Laif.it,www.Laif.it
+      - LETSENCRYPT_EMAIL=leocarbo00@gmail.com
+      # Internal routing for NGINX
+      - VIRTUAL_PROTO=http
+      - VIRTUAL_PORT=3000
+    expose:
+      - "3000"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  vhost.d:
+  html:
+  certs:
+
+networks:
+  app-network:
+    driver: bridge
