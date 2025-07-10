@@ -11,9 +11,9 @@ import { AnalyticsConsent } from "@/components/analytics-consent";
 const inter = Poppins({ weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Laif - Intelligenza Artificiale per aziende fatta semplice",
+  title: "Helia - Assistente AI telefonico",
   description:
-    "Laif è una startup innovativa che sviluppa soluzioni di intelligenza artificiale per aiutare le aziende ad adattarsi ad un era di automazione.",
+    "Helia è un assistente AI telefonico che risponde alle richieste dei clienti in tempo reale.",
   icons: {
     icon: ["/favicon.ico?v=4"],
     apple: ["/apple-touch-icon.png?v=4"],
